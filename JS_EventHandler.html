@@ -17,11 +17,21 @@
         console.log("MouseUp.....");
       }
       function MouseMove() {
-        console.log("MouseMove.....");
+        console.log("MouseMove....."); 
       }
 
+      function keydownevent() {
+        document.getElementById("input1");
+        alert("Pressed a key");
+      } 
       
+      document.addEventListener("click", function () {
+          document.getElementById("demo").innerHTML = "Hello World";
+        });
+  
     </script>
+
+    <p id="demo"></p>
     <button  onclick="myClick()">
       Click Here
     </button><br>
@@ -34,17 +44,13 @@
     <button onmousedown="Mousedown()">
       Mousedown
     </button><br>
-    
+    <button>
       MouseUp
     </button><br>
     <button onmousemove="MouseMove()">
       MouseMove
-    </button>
-    <button onmousemove="KeyDown()">
-      KeyDown
-    </button>
-    <button onmousemove="KeyUp()">
-      KeyUp
-    </button>
+    </button><br>
+    <input type="text" id="input1" onkeydown="keydownevent()"/>  
+   
   </body>
 </html>
