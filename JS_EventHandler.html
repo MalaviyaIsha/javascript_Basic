@@ -1,0 +1,50 @@
+<html>
+  <body>
+    <script>
+      function myClick(){
+        console.log("The Button is Clicked.....");
+      }
+      function MouseOver() {
+        console.log("MouseOver.....");
+      }
+      function MouseOut() {
+        console.log("MouseOut.....");
+      }
+      function Mousedown() {
+        console.log("Mousedown.....");
+      }
+      function MouseUp() {
+        console.log("MouseUp.....");
+      }
+      function MouseMove() {
+        console.log("MouseMove.....");
+      }
+
+      
+    </script>
+    <button  onclick="myClick()">
+      Click Here
+    </button><br>
+    <button onmouseover="MouseOver()">
+      MouseOver
+    </button><br>
+    <button onmouseout="MouseOut()">
+      MouseOut
+    </button><br>
+    <button onmousedown="Mousedown()">
+      Mousedown
+    </button><br>
+    
+      MouseUp
+    </button><br>
+    <button onmousemove="MouseMove()">
+      MouseMove
+    </button>
+    <button onmousemove="KeyDown()">
+      KeyDown
+    </button>
+    <button onmousemove="KeyUp()">
+      KeyUp
+    </button>
+  </body>
+</html>
