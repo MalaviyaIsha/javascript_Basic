@@ -213,14 +213,68 @@ console.log("Objects:::");
       let ans = x+y;
       console.log(ans);
     }
-    sum(50,50);
+    console.log(sum(50,50));
+
+// self invoking function:::
+(function(){console.log("Hello")})();
+
+//Arrow Function::::
+const x = (x,y) => {return x*y};
+console.log(x(5,5));
+
+
+//Function Rest Parameter::::::::::
+
+function sum (...args){
+  let sum = 0 ;
+  for(let arg of args){
+    sum += arg;
+  }
+  return sum ;
+}
+console.log(sum(2,4,4));
+
+//Array Destructuring:::::::::::
+let arr1 , arr2;
+[arr1 ,arr2] = [10,20];
+console.log(arr1 + " " + arr2);
+
+var [firstName, , ...lastName] = ["alpha", "beta", "gamma", "delta"];
+console.log(firstName);
+console.log(lastName); 
+
+//Object Destructuring:::::::::::
+var marks1 = { x1: 21, y1: -34, z1: 47 };
+const { x1, y1, z1 } = marks1; 
+console.log(x1 + " " + y1 + " " + z1);
+
+//Template Literals::::::::
+let fName = "John";
+let lName = "Doe";
+let text1 = `Welcome ${fName}, ${lName}!`;
+console.log(text1);
+
+//Classes:::::::::::::
+class Person2 {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+  detail() {
+    console.log("hello!");
+  }
+}
+
+const person1 = new Person2('John', 25);
+console.log(person1.name); 
+console.log(person1.age);  
+person1.detail();          
 
 
 
 
 
 
-//
 
 
 
