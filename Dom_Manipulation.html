@@ -1,0 +1,47 @@
+<html>
+  <body>
+    <script>
+      //Selecting element by ID
+        function dom(){
+          var element = document.getElementById('myDiv');
+          //Modifying element
+          element.innerHTML = "Hello World!";
+          //Styling element
+          element.style.color = "red";
+          
+      //Selecting element by ClassName
+         var elementClass = document.getElementsByClassName('box1');
+         for (var i = 0; i < elementClass.length; i++) {
+          elementClass[i].innerHTML = "Hello Jack!";
+          elementClass[i].style.color = "green";
+         }
+         
+      //Selecting element by TagName
+         var elementTag = document.getElementsByTagName('p');
+         for(var j = 0 ; j < elementTag.length ; j++){
+            elementTag[j].innerHTML="New Paragraph";
+            elementTag[j].style.color = "Blue";
+         }
+
+      //Selecting element by QuerySelector
+       var elementQuerySelector = document.querySelector('h1');
+       elementQuerySelector.innerHTML = "New QuerySelector";
+       elementQuerySelector.style.color = "pink";
+
+      //Create and Remove element
+          var elementRemove = document.createElement("h3");
+          elementRemove.innerHTML = "Good Morning";
+          document.getElementById("removeParagraph").appendChild(elementRemove);
+          elementRemove.remove();
+      }
+    </script>
+
+    <div id="myDiv" class="box">Hello</div>
+    <div id="myDiv1" class="box1">Hello Sofy</div>
+    <h3 id="removeParagraph">RemoveParagraph</h3>
+    <p id="paragraph">Paragraph</p>
+    <!-- <p id="removeParagraph">RemoveParagraph</p> -->
+    <h1>QuerySelector</h1>
+    <button onclick="dom()">Dom Manipulation</button>
+  </body>
+</html>
