@@ -260,7 +260,7 @@ class Person2 {
     this.name = name;
     this.age = age;
   }
-  detail() {
+  details() {
     console.log("hello!");
   }
 }
@@ -268,7 +268,7 @@ class Person2 {
 const person1 = new Person2('John', 25);
 console.log(person1.name); 
 console.log(person1.age);  
-person1.detail();          
+person1.details();          
 
 
 
