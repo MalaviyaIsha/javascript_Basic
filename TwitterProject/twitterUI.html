@@ -1,0 +1,93 @@
+<html>
+
+<head>
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div>
+    <div>
+      <div class="flex bg-indigo-300 p-2 justify-between p-4">
+
+        <h1 class="text-xl ">Twubric</h1>
+        <!-- <button class="bg-indigo-100 p-2 rounded">Sort By</button> -->
+        <div>
+          <div>
+            <label>Sort By :</label>
+            <select class="rounded bg-indigo-100 p-1" id="sortby_category">
+              <option value="Friends">Friends</option>
+              <option value="Influence">Influence</option>
+              <option value="chirpiness">Chirpiness</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="m-4">
+        <div>
+          <label>Start Date :</label>
+          <input class="rounded bg-indigo-100 p-1" type="date" />
+        </div>
+        <div>
+          <label>End Date :</label>
+          <input class="rounded bg-indigo-100 p-1 mt-2" type="date" />
+        </div>
+      </div>
+    </div>
+    <div id="userContainer" class="allDivData m-5 grid gap-5 lg:grid-cols-4 sm:grid-cols-2"></div>
+  </div>
+
+  <script>
+    const dateFormate = (data) => {
+      const date = new Date(data * 1000);
+      const options = { year: 'numeric', month: 'short', day: 'numeric' };
+      const formattedDate = date.toLocaleDateString('en-US', options);
+      return formattedDate;
+    }
+    // Fetch JSON data
+    fetch('./db.json')
+      .then(response => response.json())
+      .then(data => {
+        // Access the array of users
+        const users = data.users;
+        users.forEach(users => {
+          const htmlContent = `
+      
+        <div class="bg-indigo-100 rounded shadow-lg">
+        <div class="flex justify-center">
+        <img class="rounded-full m-5 shadow-lg" src="${users.image}">
+        </div>
+        <hr>
+        <div class="flex justify-between ">
+          <h1 class="p-5  ">${users.username}</h1>
+          <h1 class="p-5  ">${users.twubric.total}</h1>
+        </div>
+
+        <div class="grid grid-cols-3 justify-between ">
+          <div class="border rounded m-2 text-center">
+            <p class="px-8 ">${users.twubric.friends}</p>
+            <p class="px-8 ">Friends</p>
+          </div>
+          <div class="border rounded m-2 text-center">
+            <p class="px-8 ">${users.twubric.influence}</p>
+            <p class="px-8 ">Influence</p>
+          </div>
+          <div class="border rounded m-2 text-center">
+            <p class="px-8 ">${users.twubric.chirpiness}</p>
+            <p class="px-8 ">Chirpiness</p>
+          </div>
+        </div>
+
+        <div class="flex justify-between ">
+          <h1 class="p-5 ">${dateFormate(users.join_date)}</h1>
+          <butoon class="bg-indigo-300 m-4 rounded p-2 ">Remove</butoon>
+        </div>
+          `;
+          // Append HTML content to the container
+          document.getElementById('userContainer').innerHTML += htmlContent;
+        });
+      })
+      .catch(error => console.error('Error fetching JSON:', error));
+  </script>
+</body>
+
+</html>
