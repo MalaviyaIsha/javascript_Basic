@@ -1,0 +1,35 @@
+<html>
+
+<body>
+  <h1>Random Color Changer</h1>
+  <button id="startBtn" onclick="startColorChange()">Start</button>
+  <button id="stopBtn" onclick="stopColorChange()">Stop</button>
+
+  <script>
+    let intervalId;
+    function generateRandomNumber() {
+      const date = new Date();
+      const seed = date.getTime();
+      let randomNum = seed ^ (seed >> 21) ^ (seed >> 35) ^ (seed >> 4);
+      //console.log("randomNum:::::::::", randomNum);
+      return randomNum & 0xFFFFFFF;
+    }
+    function changeBackgroundColor() {
+      const randomColor = '#' + generateRandomNumber().toString(16).substr(-6);
+      //console.log("randomColor:::::::::::", randomColor);
+      document.body.style.backgroundColor = randomColor;
+    }
+
+    function startColorChange() {
+      intervalId = setInterval(changeBackgroundColor, 1000);
+      //console.log("START:::");
+    }
+
+    function stopColorChange() {
+      clearInterval(intervalId);
+      document.body.style.backgroundColor = "#FFFFFF";
+    }
+  </script>
+</body>
+
+</html>
