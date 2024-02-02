@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" /> -->
+</head>
+
+<body>
+  <div>
+    <h1>User Authentication</h1>
+    <label>Username:</label>
+    <input id="username" type="text" /><br><br>
+    <label>Password:</label>
+    <input id="password" type="text" /><br><br>
+    <button onclick="authenticate()">Login</button>
+
+    <h1>Task List</h1>
+    <div id="tasks"></div>
+
+    <br>
+    <h1>Add New Task</h1>
+    <form>
+      <label>Task:</label>
+      <input id="taskTitle" type="text" placeholder="Enter task title..." /><br><br>
+      <label>Description:</label>
+      <input id="taskDescription" type="text" placeholder="Enter task description..." /><br>
+      <button type="button" onclick="addTask()">Submit</button>
+    </form>
+  </div>
+  <script>
+    const users = [
+      // { username: 'John Doe', password: 'pass1', id: 1 },
+      { username: 'max', password: 'pass2', id: 2 }
+    ];
+
+    const tasks = [
+      { title: 'Task 1', description: 'Make userInterface' },
+      { title: 'Task 2', description: 'Call Api' },
+    ];
+
+    function authenticateUser(username, password) {
+      return new Promise((resolve, reject) => {
+        // const userData = users.find((u) => u.username === username && u.password === password);
+        const userData = { username: users.username, password: users.password }
+        if (userData) {
+          // if authentication successful
+          resolve(userData);
+        } else {
+          // Reject the Promise with an error message if authentication fails
+          reject('Invalid username or password.');
+        }
+      });
+    }
+
+    function authenticate() {
+      const usernameInput = document.getElementById('username').value;
+      const passwordInput = document.getElementById('password').value;
+
+      authenticateUser(usernameInput, passwordInput)
+        .then(user => {
+          console.log('Authentication successful...', user);
+          alert('Login successful...');
+          fetchAndDisplayTasks();
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Invalid username or password.');
+        });
+    }
+
+    function fetchTasks() {
+      return new Promise((resolve, reject) => {
+        resolve(tasks);
+        reject("Error in fetch task...")
+      });
+    }
+
+    function displayTasks(tasks) {
+      const taskDiv = document.getElementById('tasks');
+      taskDiv.innerHTML = ''; // Clear the existing content
+
+      tasks.forEach(task => {
+        const taskParagraph = document.createElement('p');
+        taskParagraph.innerHTML = `Title: ${task.title}, Description: ${task.description}`;
+        taskDiv.appendChild(taskParagraph);
+      });
+    }
+
+    function postData(newTask) {
+      return new Promise((resolve, reject) => {
+        tasks.push(newTask);
+        resolve('Task added successfully...');
+        // In a real-world scenario, you would send the new task to a server.
+      });
+    }
+
+    function addTask() {
+      const taskTitleInput = document.getElementById('taskTitle').value;
+      const taskDescriptionInput = document.getElementById('taskDescription').value;
+
+      postData({ title: taskTitleInput, description: taskDescriptionInput })
+        .then((message) => {
+          console.log('Post success:', message);
+          alert('Task added successfully.');
+          fetchAndDisplayTasks();
+        })
+        .catch((error) => {
+          console.error('Add task error:', error);
+          alert('Error adding task.');
+        });
+    }
+
+    function fetchAndDisplayTasks() {
+      fetchTasks()
+        .then((tasks) => {
+          console.log(tasks);
+          displayTasks(tasks);
+        })
+        .catch(error => {
+          console.log("Error fetching tasks:", error);
+        });
+    }
+  </script>
+</body>
+
+</html>
