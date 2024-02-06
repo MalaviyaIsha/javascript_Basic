@@ -5,48 +5,47 @@ class apiQueue {
   }
 
   //for enqueue:::::::::::::::::::::::::::::::::::::::::::::::::
-  async enqueue(url) {
+  enqueue(url) {
     const task = async () => {
-      this.busy = true;
       try {
+        this.busy = true;
         const response = await fetch(url);
         const data = await response.json();
-        this.queue.push(data);
-        //  console.log('Fetched data:', data);
+        //this.queue.push(data);
+        console.log('Fetched data:', data);
       } catch (error) {
         console.error('Error fetching posts:', error);
       }
-      finally {
-        this.dequeue();
-      }
-
     }
-    // const tasks = this.queue.push(task);
-    // console.log("task : ",tasks)
 
     //push data in queue::::::::::::::::::::::::::::::::::::::::
-    this.queue.push(task);
-    console.log("this.queue ::", this.queue);
+    this.queue.push(setTimeout(() => task, 1000));
+    console.log("this.queue after push ::", this.queue);
 
-    this.dequeue(task);
-    //console.log("this.dequeue ::::", this.dequeue(task));
+    if (!this.busy) {
+      this.dequeue();
+    }
   }
 
   //for dequeue :::::::::::::::::::::::::::::::::::::::::::::::::::
-  async dequeue() {
+  dequeue() {
     if (this.queue.length === 0 || this.busy === true) {
-      console.log('false:::');
+      console.log('Queue is empty or busy...');
       return false;
     }
-    else {
-      this.queue.shift();
-      //  console.log("this.dequeue::::::", this.dequeue(task));
-    }
+    //  else {
+    this.queue.shift();
+    console.log("this.queue after shift ::::::", this.queue);
+    console.log("Task completed successfully...")
+    this.dequeue();
+
+    //}
   }
 }
+
 const apiqueue = new apiQueue();
 apiqueue.enqueue('https://jsonplaceholder.typicode.com/posts/1');
 apiqueue.enqueue('https://jsonplaceholder.typicode.com/todos/1');
 //apiqueue.enqueue('https://jsonplaceholder.typicode.com/todos/2');
 
-console.log("apiQueue.queue:::", apiqueue.queue);
+console.log("Final queue:::", apiqueue.queue);
