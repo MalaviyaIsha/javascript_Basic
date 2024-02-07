@@ -41,10 +41,10 @@
     function authenticateUser(username, password) {
       return new Promise((resolve, reject) => {
         // const userData = users.find((u) => u.username === username && u.password === password);
-        const userData = { username: users.username, password: users.password }
-        if (userData) {
+        //const userData = { username: users.username, password: users.password }
+        if (username === users.username && password === users.password) {
           // if authentication successful
-          resolve(userData);
+          resolve("login successful");
         } else {
           // Reject the Promise with an error message if authentication fails
           reject('Invalid username or password.');
@@ -64,7 +64,7 @@
         })
         .catch(error => {
           console.error('Error:', error);
-          alert('Invalid username or password.');
+          alert('Invalid username or password or your field is empty.');
         });
     }
 
