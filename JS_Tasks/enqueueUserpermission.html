@@ -1,0 +1,97 @@
+<html>
+
+<body>
+  <script>
+    class apiQueue {
+      constructor() {
+        this.queue = [];
+        this.busy = false;
+        this.time = null;
+      }
+      //onclick pr fetch
+      async userPermission(apiData) {
+        return new Promise((resolve, reject) => {
+          const userDiv = document.createElement("div");
+          const userInput = document.createElement("h4");
+          userInput.innerHTML = `Do you want to fetch the ${apiData}?`;
+          const button1 = document.createElement("button");
+          button1.innerHTML = "yes";
+          const button2 = document.createElement("button");
+          button2.innerHTML = "No";
+          button1.onclick = () => {
+            userDiv.remove();
+            resolve("user accept...");
+          };
+          button2.onclick = () => {
+            userDiv.remove();
+            reject("User denied permission.");
+            console.log("User denied permission.");
+            return false;
+          };
+          userDiv.appendChild(userInput);
+          userDiv.appendChild(button1);
+          userDiv.appendChild(button2);
+          document.body.appendChild(userDiv);
+          setTimeout(() => {
+            userDiv.style.display = "none";
+          }, 5000);
+        });
+      }
+      //for enqueue:::::::::::::::::::::::::::::::::::::::::::::::::
+      async enqueue(apiData) {
+        this.busy = true;
+        const permission = await this.userPermission(apiData);
+        if (permission) {
+          try {
+
+            const response = await fetch(apiData);
+            const data = await response.json();
+            //console.log('data', data);
+            this.queue.push(data);
+            console.log("queue with data... ", this.queue);
+          }
+          catch (error) {
+            console.log("Invalid api...", error);
+            return false;
+          }
+        }
+
+        clearTimeout(this.time);
+        this.time = setTimeout(() => {
+          this.busy = false;
+          if (!this.busy) {
+            this.dequeue();
+          }
+        }, 1000);
+
+      }
+
+      //for dequeue :::::::::::::::::::::::::::::::::::::::::::::::::::
+      dequeue() {
+        if (this.queue.length === 0) {
+          console.log('Queue is empty or busy...');
+          return false;
+        }
+        else if (this.busy === true) {
+          return false;
+        }
+        //  else {
+        const task = this.queue.shift();
+        console.log('Processing task:', task);
+        console.log('Task completed successfully...');
+        console.log("Queue after shift : ", this.queue)
+        this.dequeue();
+
+        //}
+      }
+    }
+
+    const apiqueue = new apiQueue();
+    apiqueue.enqueue('https://jsonplaceholder.typicode.com/todos/1');
+    apiqueue.enqueue('https://jsonplaceholder.typicode.com/todos/2');
+    apiqueue.enqueue('https://jsonplaceholder.typicode.com/todos/3');
+
+  </script>
+</body>
+
+</html>
