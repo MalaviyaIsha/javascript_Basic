@@ -1,0 +1,92 @@
+<html>
+<body>
+  <div id="divPermission" style="display: none;">
+    <form id="userPermissionForm">
+      <label for="permission">Do you want to fetch the API? (yes/no)</label>
+      <input type="text" id="permissionInput" required>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    class apiQueue {
+      constructor() {
+        this.queue = [];
+        this.busy = false;
+        this.time = null;
+      }
+
+      async showPermissionForm(url) {
+        const permissionForm = document.getElementById('divPermission');
+        permissionForm.style.display = 'block';
+
+        const userPermissionForm = document.getElementById('userPermissionForm');
+        userPermissionForm.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          const permissionInput = document.getElementById('permissionInput').value.toLowerCase();
+
+          if (permissionInput === 'yes') {
+            await this.enqueue(url);
+            //this.dequeue();
+          } else if (permissionInput === 'no') {
+            console.log('stop');
+            permissionForm.style.display = 'none';
+          } else {
+            console.log('Invalid input.');
+          }
+        });
+
+        setTimeout(() => {
+          permissionForm.style.display = 'none';
+        }, 5000);
+      }
+
+      async enqueue(url) {
+        try {
+          this.busy = true;
+          const response = await fetch(url);
+          const data = await response.json();
+          this.queue.push(data);
+          console.log("Queue with data:", this.queue);
+        } catch (error) {
+          console.error(`Error fetching url:${url}`, error);
+        }
+
+        clearTimeout(this.time);
+        this.time = setTimeout(() => {
+          this.busy = false;
+          if (!this.busy) {
+            this.dequeue();
+          }
+        }, 1000);
+      }
+
+      dequeue() {
+        if (this.queue.length === 0) {
+          console.log('Queue is empty or busy...');
+          return false;
+        } else if (this.busy === true) {
+          return false;
+        }
+
+        const task = this.queue.shift();
+        console.log('Processing task:', task);
+        console.log('Task completed successfully...');
+        console.log("Queue after shift: ", this.queue);
+        this.dequeue();
+
+        // this.showPermissionForm();
+        if (this.queue.length > 0) {
+          this.showPermissionForm(this.queue[0]);
+        }
+      }
+    }
+
+    const apiqueue = new apiQueue();
+    apiqueue.showPermissionForm('https://jsonplaceholder.typicode.com/todos/1');
+    apiqueue.showPermissionForm('https://jsonplaceholder.typicode.com/todos/2');
+    apiqueue.showPermissionForm('https://jsonplaceholder.typicode.com/todos/3');
+  </script>
+</body>
+
+</html>
