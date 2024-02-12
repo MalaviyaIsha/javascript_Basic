@@ -1,0 +1,100 @@
+<html>
+
+<body>
+  <script>
+    class apiQueue {
+      constructor() {
+        this.queue = [];
+        this.busy = false;
+        this.time = null;
+        this.blankUrl = false;
+      }
+      async userPermission(apiCall) {
+        return new Promise((resolve, reject) => {
+          const userDiv = document.createElement("div");
+          const userInput = document.createElement("h4");
+          userInput.innerHTML = `Do you want to fetch the ${apiCall}?`;
+          const button1 = document.createElement("button");
+          button1.innerHTML = "yes";
+          const button2 = document.createElement("button");
+          button2.innerHTML = "No";
+          button1.onclick = () => {
+            userDiv.remove();
+            resolve("user accept...");
+          };
+          button2.onclick = () => {
+            userDiv.remove();
+            reject("User denied permission.");
+            console.log("User denied permission.");
+            return false;
+          };
+          userDiv.appendChild(userInput);
+          userDiv.appendChild(button1);
+          userDiv.appendChild(button2);
+          document.body.appendChild(userDiv);
+          setTimeout(() => {
+            userDiv.style.display = "none";
+          }, 5000);
+        });
+      }
+
+      enqueue(url) {
+
+        if (url.trim() !== "") {
+          if (!this.blankUrl) {
+            this.queue.push(url);
+            console.log("push::", this.queue);
+          }
+          else {
+            console.log("Blank URL...")
+          }
+        }
+        else {
+          this.blankUrl = true;
+        }
+
+        clearTimeout(this.time);
+        this.time = setTimeout(() => {
+          if (!this.busy) {
+            this.dequeue();
+          }
+        }, 1000);
+      }
+
+      async dequeue() {
+        if (this.queue.length === 0) {
+          console.log("Queue is empty...")
+          return false;
+        }
+        if (this.busy === true) {
+          return false;
+        }
+        const apiCall = this.queue.shift();
+
+        this.busy = true;
+
+        try {
+          const permission = await this.userPermission(apiCall);
+          if (permission) {
+            const response = await fetch(apiCall);
+
+            console.log(" dequeue :", apiCall);
+          }
+        }
+        catch (error) {
+          console.log(error);
+          return false;
+        }
+        console.log("after shift : ", this.queue);
+        this.busy = false;
+        this.dequeue();
+      }
+    }
+    const apiqueue = new apiQueue();
+    apiqueue.enqueue("https://dummyjson.com/products/1");
+    apiqueue.enqueue("https://dummyjson.com/products/2");
+    apiqueue.enqueue("https://dummyjson.com/products/3");
+  </script>
+</body>
+
+</html>
