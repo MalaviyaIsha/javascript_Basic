@@ -1,0 +1,97 @@
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="./style.css" />
+</head>
+
+<body>
+  <div class="main">
+    <div class="firstDiv">
+      <p id="welcomeText">Welcome</p>
+      <p id="loginText">Login/SignUp</p>
+      <p id="screenText">Screen</p>
+      <p id="linkText">www.taimo orSikandar.com</p>
+    </div>
+    <div class="secondDiv">
+      <div class="whiteBox">
+        <p id="login-tag">Login</p>
+        <form id="loginForm" action="#">
+          <input id="email" type="email" placeholder="Enter Email" required autocomplete="new-password"/><br />
+          <input id="password" type="password" placeholder="Password" autocomplete="new-password" required />
+          <button type="submit" onclick="validateForm()" id="login-btn">LOGIN</button>
+        </form>
+        <p id="question">Don't have account?</p><br>
+        <a href="signUp.html">SignUp</a>
+      </div>
+    </div>
+
+  </div>
+  </div>
+  </div>
+
+  <script>
+    async function validateForm() {
+      console.log("functionnnnnnn............")
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+       console.log(name, email);
+
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address.');
+        return false;
+      }
+
+      if (name === '' || email === '' || password === '' || confirmPass === '') {
+        alert('Please fill in all fields.');
+        return false;
+      }
+
+      if (password.length < 4) {
+        alert('Password should be at least 8 characters long.');
+        return false;
+      }
+
+      if (password !== confirmPass) {
+        console.log("Password does not match...");
+        alert('Password and Confirm password must be same');
+        return false;
+      }
+
+      const data = {};
+      data["email"] = email;
+      data["password"] = password;
+    
+
+      try {
+        console.log(data, "tryyyyyyyy");
+        const response = await fetch('http://localhost:3000/loginn', {
+          // mode: 'no-cors',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+        console.log("ddddddddddd", result);
+
+        if (result.success) {
+          alert(result.message);
+        } else {
+          alert("Error response");
+        }
+      } catch (error) {
+        console.error('Error during fetch:', error);
+        alert('An error occurred. Please try again later.');
+      }
+
+      return false;
+    
+    }
+  </script>
+</body>
+
+</html>
