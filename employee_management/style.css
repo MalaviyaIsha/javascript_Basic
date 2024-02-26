@@ -1,0 +1,145 @@
+body {
+  margin: 0;
+}
+p {
+  margin: 0;
+}
+.main {
+  display: flex;
+  width: 100%;
+  background-color: #FFDF00;
+  min-height: 100vh;
+  gap: 2;
+}
+.firstDiv {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFDF00;
+  width: 100vw;
+  position: relative;
+  /* flex: 1 1 120px; */
+}
+.firstDiv p {
+  margin-top: 15px;
+}
+#welcomeText {
+  text-align: center;
+  font-size: 6vw;
+  width: 100%;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: cursive;
+}
+#loginText {
+  font-size: 5vw;
+  font-style: italic;
+  font-weight: 500;
+}
+#screenText {
+  font-weight: normal;
+  font-size: 5vw;
+  font-family: "Courier New", Courier, monospace;
+}
+#linkText {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 25px;
+  font-size: 2vw;
+  font-weight: bold;
+}
+.secondDiv {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  background-color: #FFDF00;
+  width: 100%;
+}
+#text {
+  font-size: 1.5vw;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-family: sans-serif;
+}
+.whiteBox {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 3vw;
+  /* justify-content: center; */
+  align-items: center;
+  /* max-height: 700px; */
+  height: calc(100vh - 250px);
+  width: 400px;
+  /* position: absolute;
+  right: 250px; */
+  box-shadow: 8px 38px 65px #585757;
+}
+/* .buttons{
+} */
+#imglogo {
+  margin-bottom: 100px;
+  width: 100px;
+  height: 100px;
+}
+#login-tag {
+  margin: 25px;
+  font-size: 25px;
+  font-weight: bold;
+}
+input {
+  padding: 10px;
+  margin: 5px;
+  width: 100%;
+  cursor: pointer;
+}
+#login-btn {
+  margin-top: 3vw;
+  padding: 1vw;
+  padding-left: 70px;
+  padding-right: 70px;
+  border: 1px solid #FFDF00;
+  background-color: #FFDF00;
+  font-weight: bold;
+  font-size: 15px;
+  border-radius: 10px;
+  box-shadow: 8px 8px 8px #ABA7A7;
+}
+#question {
+  margin-top: 3vw;
+  font-weight: bold;
+  font-size: 15px;
+}
+@media (max-width: 800px) {
+  .main {
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+  }
+  #welcomeText {
+    font-size: 8vw;
+  }
+  #loginText,
+  #screenText {
+    font-size: 6vw;
+  }
+  #text,
+  #btn1,
+  #btn2,
+  #question {
+    font-size: 3vw;
+  }
+  #linkText {
+    display: none;
+  }
+}
+#info {
+  font-size: 2sw;
+}
+/* #second{
+  text-align: center;
+  width: 100%;
+} 
