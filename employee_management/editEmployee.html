@@ -1,0 +1,112 @@
+<html>
+
+<head>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    .main-empDiv {
+      display: flex;
+      flex-direction: column;
+      background-color: #FFDF00;
+      height: 100vh;
+      width: 100vw;
+      align-items: center;
+    }
+
+    #loginForm {
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      padding: 15px;
+      align-items: center;
+      border-radius: 5px;
+      box-shadow: 8px 8px 18px #585757
+    }
+
+    input {
+      margin: 3px;
+      padding: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main-empDiv">
+
+    <p id="login-tag">Edit Employee Info</p>
+    <form id="loginForm" action="#">
+      <input id="empID" type="number" placeholder="Enter EmployeeID" required autocomplete="new-password" /><br />
+      <input id="email" type="email" placeholder="Enter Email" required autocomplete="new-password" /><br />
+      <input id="name" type="text" placeholder="Enter Name" required /><br />
+      <input id="password" type="password" placeholder="Password" required autocomplete="new-password" /><br />
+      <button type="button" onclick="return validateForm()" id="login-btn">UPDATE</button>
+    </form>
+
+  </div>
+  </div>
+
+  <script>
+    async function validateForm() {
+
+      console.log("functionnnnnnn............")
+      var id = document.getElementById('empID').value;
+      var name = document.getElementById('name').value;
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+
+      console.log(name, email);
+
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address.');
+        return false;
+      }
+
+      if (name === '' || email === '' || password === '') {
+        alert('Please fill in all fields.');
+        return false;
+      }
+
+      if (password.length < 8) {
+        alert('Password should be at least 8 characters long.');
+        return false;
+      }
+
+      const data = {};
+      data["id"] = parseInt(id);
+      data["email"] = email;
+      data["name"] = name;
+      data["password"] = password;
+
+      try {
+        console.log(data, "tryyyyyyyy");
+        const response = await fetch('http://localhost:3000/editUser', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+        console.log("ddddddddddd", result);
+
+        if (result.success) {
+          alert(result.message);
+        } else {
+          alert(result.error);
+        }
+      } catch (error) {
+        console.error('Error during fetch:', error);
+        alert('An error occurred. Please try again later.');
+      }
+
+      
+    }
+  </script>
+</body>
+
+</html>
