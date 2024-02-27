@@ -1,11 +1,11 @@
 const http = require("http")
 const url = require("url")
 let nextId = 1;
-const signUpData = []
+const signUpData = [];
 const server = http.createServer((req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*")
   if (req.method === "OPTIONS") {
-    res.setHeader("Access-Control-Allow-Methods", "POST,PUT")
+    res.setHeader("Access-Control-Allow-Methods", "POST,PUT,DELETE")
     res.setHeader("Access-Control-Allow-Headers", "Content-Type")
     res.writeHead(200)
     res.end()
@@ -22,10 +22,17 @@ const server = http.createServer((req, res) => {
     handleGetEmployees(req, res)
   } else if (path === "/editUser") {
     handleUpdateUser(req, res)
-  } else {
-    res.statusCode = 405
+  } else if (path.startsWith("/deleteUser/")) {
+    handleDeleteUser(req, res)
+  } 
+  // else if (path==="/getEmployee/") {
+  //   getEmployee(req, res)
+  // }
+  else {
+    res.statusCode = 404
     res.setHeader("Content-Type", "text/plain")
-    res.end("Use GET or POST method only...\n")
+    res.end("routing error part...\n")
+    // res.end(JSON.stringify({ error: "Route not found" }));
   }
 })
 
@@ -111,6 +118,50 @@ function handleUpdateUser(req, res) {
   }
 }
 
+function handleDeleteUser(req, res) {
+  if (req.method === 'DELETE' && req.url.startsWith("/deleteUser/")) {
+    const userId = parseInt(req.url.split("/")[2]); // Extract user id from URL
+    const userIndex = signUpData.findIndex(user => user.id === userId);
+
+    if (userIndex !== -1) {
+      signUpData.splice(userIndex, 1);
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: true, message: 'User successfully deleted' }));
+    } else {
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'User not found' }));
+    }
+  } else {
+    res.writeHead(405, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: 'Method Not Allowed' }));
+  }
+}
+
+// function handleDeleteUser(req, res) {
+//   if (req.method === 'DELETE' && req.url === "/deleteUser/:id") {
+//     let body = '';
+//     req.on('data', chunk => {
+//       body += chunk.toString();
+//     });
+//     req.on('end', () => {
+//       const deleteData = JSON.parse(body);
+//       console.log("deleteData:::", deleteData)
+//       const userIndex = signUpData.findIndex(user => user.id === deleteData.id);
+//       console.log("userIndex:::::", userIndex)
+//       if (userIndex !== -1) {
+//         signUpData.splice(userIndex, 1);
+//         res.writeHead(200, { 'Content-Type': 'application/json' });
+//         res.end(JSON.stringify({ success: true, message: 'User deleted successfully', user: signUpData[userIndex] }));
+//       } else {
+//         res.writeHead(404, { 'Content-Type': 'application/json' });
+//         res.end(JSON.stringify({ error: 'User not found' }));
+//       }
+//     });
+//   } else {
+//     res.writeHead(405, { 'Content-Type': 'application/json' });
+//     res.end(JSON.stringify({ error: 'Method Not Allowed' }));
+//   }
+// }
 
 function handleGetEmployees(req, res) {
   if (req.method === "GET" && req.url === "/getdata") {
@@ -121,8 +172,6 @@ function handleGetEmployees(req, res) {
     res.end(JSON.stringify({ error: "Method Not Allowed" }))
   }
 }
-
-
 
 const PORT = 3000
 server.listen(PORT, () => {

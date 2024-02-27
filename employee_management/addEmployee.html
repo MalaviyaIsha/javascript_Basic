@@ -25,6 +25,10 @@
       box-shadow: 8px 8px 18px #585757
     }
 
+    #add-tag{
+      font-size: 22px;
+      font-weight: bold;
+    }
     input {
       margin: 3px;
       padding: 5px;
@@ -35,7 +39,7 @@
 <body>
   <div class="main-empDiv">
 
-    <p id="login-tag">Add New Employee</p>
+    <p id="add-tag">Add New Employee</p>
     <form id="loginForm" action="#">
       <input id="name" type="text" placeholder="Enter Name" required /><br />
       <input id="email" type="email" placeholder="Enter Email" required autocomplete="new-password" /><br />
@@ -92,6 +96,7 @@
         console.log("ddddddddddd", result);
 
         if (result.success) {
+           window.location.href = "empList.html";
           alert(result.message);
         } else {
           alert(result.error);
