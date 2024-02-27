@@ -1,33 +1,48 @@
 <html>
 
 <head>
-  <link rel="stylesheet" type="text/css" href="./style.css" />
+  <style>
+    body {
+      margin: 0;
+    }
+
+    .main-empDiv {
+      display: flex;
+      flex-direction: column;
+      background-color: #FFDF00;
+      height: 100vh;
+      width: 100vw;
+      align-items: center;
+    }
+
+    #loginForm {
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      padding: 15px;
+      align-items: center;
+      border-radius: 5px;
+      box-shadow: 8px 8px 18px #585757
+    }
+
+    input {
+      margin: 3px;
+      padding: 5px;
+    }
+  </style>
 </head>
 
 <body>
-  <div class="main">
-    <div class="firstDiv">
-      <p id="welcomeText">Welcome</p>
-      <p id="loginText">Login/SignUp</p>
-      <p id="screenText">Screen</p>
-      <p id="linkText">www.taimo orSikandar.com</p>
-    </div>
-    <div class="secondDiv">
-      <div class="whiteBox">
-        <p id="login-tag">SignUp</p>
-        <form id="loginForm" action="#">
-          <input id="name" type="text" placeholder="Enter Name" required /><br />
-          <input id="email" type="email" placeholder="Enter Email" required autocomplete="new-password" /><br />
-          <input id="password" type="password" placeholder="Password" required autocomplete="new-password" /><br />
-          <input id="confirmpassword" type="password" placeholder="Confirm Password" required
-            autocomplete="new-password" />
-          <button type="button" onclick="return validateForm()" id="login-btn">SignUp</button>
-        </form>
-        <p id="question">Already a member?</p><br>
-        <a href="login.html">Login</a>
-      </div>
+  <div class="main-empDiv">
 
-    </div>
+    <p id="login-tag">Add New Employee</p>
+    <form id="loginForm" action="#">
+      <input id="name" type="text" placeholder="Enter Name" required /><br />
+      <input id="email" type="email" placeholder="Enter Email" required autocomplete="new-password" /><br />
+      <input id="password" type="password" placeholder="Password" required autocomplete="new-password" /><br />
+      <button type="button" onclick="return validateForm()" id="login-btn">ADD</button>
+    </form>
+
   </div>
   </div>
 
@@ -38,7 +53,6 @@
       var name = document.getElementById('name').value;
       var email = document.getElementById('email').value;
       var password = document.getElementById('password').value;
-      var confirmPass = document.getElementById('confirmpassword').value;
       console.log(name, email);
 
       var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -48,7 +62,7 @@
         return false;
       }
 
-      if (name === '' || email === '' || password === '' || confirmPass === '') {
+      if (name === '' || email === '' || password === '') {
         alert('Please fill in all fields.');
         return false;
       }
@@ -58,17 +72,10 @@
         return false;
       }
 
-      if (password !== confirmPass) {
-        console.log("Password does not match...");
-        alert('Password and Confirm password must be same');
-        return false;
-      }
-
       const data = {};
       data["name"] = name;
       data["email"] = email;
       data["password"] = password;
-      data["confirmPass"] = confirmPass;
 
       try {
         console.log(data, "tryyyyyyyy");
@@ -85,7 +92,6 @@
         console.log("ddddddddddd", result);
 
         if (result.success) {
-           window.location.href = "login.html";
           alert(result.message);
         } else {
           alert(result.error);
