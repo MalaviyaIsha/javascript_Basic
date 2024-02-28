@@ -143,7 +143,9 @@ p {
 }
 
 #info {
-  font-size: 2sw;
+  font-size: 15px;
+  font-weight: bold;
+  
 }
 /* #second{
   text-align: center;

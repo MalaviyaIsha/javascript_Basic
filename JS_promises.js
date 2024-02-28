@@ -8,7 +8,7 @@ function myCalculator(num1, num2, myCallback) {
   myCallback(sum);
 }
 
-myCalculator(5, 5, myDisplayer); 
+myCalculator(5, 5, myDisplayer);
 
 //promises::::::::::
 function fetchData() {
@@ -17,7 +17,7 @@ function fetchData() {
       // const data = { message: "Data fetched successfully!" };
       // resolve(data);
       resolve("Data fetched successfully");
-       //reject("Error fetching data");
+      //reject("Error fetching data");
     }, 1000);
   });
 }
