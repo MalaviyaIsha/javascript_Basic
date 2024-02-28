@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <link rel="stylesheet" type="text/css" href="./style.css" />
+  <link rel="stylesheet" type="text/css" href="../style.css" />
 </head>
 
 <body>
@@ -21,7 +21,7 @@
           <input id="password" type="password" placeholder="Password" required autocomplete="new-password" /><br />
           <input id="confirmpassword" type="password" placeholder="Confirm Password" required
             autocomplete="new-password" />
-          <button type="button" onclick="return validateForm()" id="login-btn">SignUp</button>
+          <button type="button" onclick="return signUpForm()" id="login-btn">SignUp</button>
         </form>
         <p id="question">Already a member?</p><br>
         <a href="login.html">Login</a>
@@ -32,9 +32,8 @@
   </div>
 
   <script>
-    async function validateForm() {
-
-      console.log("functionnnnnnn............")
+    async function signUpForm() {
+         console.log("functionnnnnnn............")
       var name = document.getElementById('name').value;
       var email = document.getElementById('email').value;
       var password = document.getElementById('password').value;
