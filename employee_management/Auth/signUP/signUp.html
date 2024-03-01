@@ -1,0 +1,37 @@
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="../../Common/style.css" />
+</head>
+
+<body>
+  <div class="main">
+    <div class="firstDiv">
+      <p id="welcomeText">Welcome</p>
+      <p id="loginText">Login/SignUp</p>
+      <p id="screenText">Screen</p>
+      <p id="linkText">www.taimo orSikandar.com</p>
+    </div>
+    <div class="secondDiv">
+      <div class="whiteBox">
+        <p id="login-tag">SignUp</p>
+        <form id="signUpForm" action="#">
+          <input id="name" type="text" placeholder="Enter Name" required /><br />
+          <input id="email" type="email" placeholder="Enter Email" required autocomplete="new-password" /><br />
+          <input id="password" type="password" placeholder="Password" required autocomplete="new-password" /><br />
+          <input id="confirmpassword" type="password" placeholder="Confirm Password" required
+            autocomplete="new-password" />
+          <button type="button" onclick="return signUpForm()" id="login-btn">SignUp</button>
+        </form>
+        <p id="question">Already a member?</p><br>
+        <a href="login.html">Login</a>
+      </div>
+
+    </div>
+  </div>
+  </div>
+
+  <script type="module" src="signUp.js"></script>
+</body>
+
+</html>

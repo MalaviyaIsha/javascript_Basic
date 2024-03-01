@@ -1,0 +1,61 @@
+ body {
+      background-color: #FFDF00;
+      padding: 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-weight: bold;
+    }
+
+    button {
+      background-color: black;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .header {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    table {
+      margin-top: 25px;
+      border-collapse: collapse;
+      background-color: white;
+      box-shadow: 2px 2px 18px black;
+      width: 100%;
+    }
+
+    th,
+    td {
+      border: 1px solid gray;
+      text-align: center;
+      padding: 10px;
+      font-size: 15px;
+    }
+
+    th {
+      background-color: black;
+      color: white;
+    }
+
+    .emp-buttons {
+      display: flex;
+      width: 100%;
+      margin-top: 35px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .edit-button,
+    .delete-button {
+      padding: 8px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 12px;
+    }
